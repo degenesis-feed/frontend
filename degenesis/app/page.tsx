@@ -8,6 +8,32 @@ import LeaderboardPage from "./components/LeaderboardPage"
 import CommunitiesPage from "./components/CommunitiesPage"
 import FollowingPage from "./components/FollowingPage"
 
+import { createAppKit } from "@reown/appkit/react";
+import { EthersAdapter } from "@reown/appkit-adapter-ethers";
+import { base, baseSepolia } from "@reown/appkit/networks";
+
+// 1. Get projectId at https://cloud.reown.com
+const projectId = "d679b0acafc801412fd613c2ebe6a961";
+
+// 2. Create a metadata object
+const metadata = {
+  name: "My Website",
+  description: "My Website description",
+  url: "https://mywebsite.com", // origin must match your domain & subdomain
+  icons: ["https://avatars.mywebsite.com/"],
+};
+
+// 3. Create the AppKit instance
+createAppKit({
+  adapters: [new EthersAdapter()],
+  metadata,
+  networks: [base, baseSepolia],
+  projectId,
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  },
+});
+
 export default function TwitterFrontend() {
   const [activeTab, setActiveTab] = useState("following")
   const [tweetText, setTweetText] = useState("")
@@ -134,6 +160,7 @@ export default function TwitterFrontend() {
                   />
                 </div>
               </button>
+              <appkit-button />
             </div>
           </div>
           <div className="md:hidden flex justify-around border-t border-gray-100">
