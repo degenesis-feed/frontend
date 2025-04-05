@@ -24,6 +24,7 @@ export default function OwnFeedPage() {
   const { address: walletAddress } = useAccount();
   const [posts, setPosts] = useState<FeedEvent[]>([]);
   const [activeTab, setActiveTab] = useState("posts");
+  const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
     if (!walletAddress) return;
@@ -40,26 +41,40 @@ export default function OwnFeedPage() {
     loadFeed();
   }, [walletAddress]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("feedme:user");
+      if (storedUser) {
+        try {
+          const parsed = JSON.parse(storedUser);
+          if (parsed?.description) {
+            setDescription(parsed.description);
+          }
+        } catch (e) {
+          console.warn("Invalid user profile in localStorage.");
+        }
+      }
+    }
+  }, []);
+
   function formatEvent(event: FeedEvent, userAddress: string) {
     const isSender = event.from?.toLowerCase() === userAddress?.toLowerCase();
     const direction = isSender ? "sent" : "received";
     const counterparty = isSender ? event.to : event.from;
-  
+
     const decimals = event.contract?.decimals ?? 18;
     const rawValue = Number(event.value ?? 0);
     const amount = (rawValue / Math.pow(10, decimals)).toFixed(2);
-  
+
     const symbol = event.contract?.symbol ?? "UNKNOWN";
     const date = event.timestamp
       ? new Date(event.timestamp * 1000).toLocaleDateString()
       : "Unknown Date";
-  
+
     return `You ${direction} ${amount} ${symbol} ${
       isSender ? "to" : "from"
     } ${shortenAddress(counterparty)} on ${date}`;
   }
-  
-  
 
   function shortenAddress(addr: string): string {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
@@ -96,30 +111,11 @@ export default function OwnFeedPage() {
 
           <div className="mt-6">
             <h1 className="text-2xl font-bold">FeedMe User</h1>
-            <p className="text-gray-500">{walletAddress ? shortenAddress(walletAddress) : "Not connected"}</p>
-
-            <p className="mt-4 text-gray-800">
-              Frontend developer & UI/UX enthusiast. Building beautiful web
-              experiences with React & Next.js. Always learning, always
-              creating.
+            <p className="text-gray-500">
+              {walletAddress ? shortenAddress(walletAddress) : "Not connected"}
             </p>
 
-            <div className="flex flex-wrap gap-y-2 mt-3 text-gray-500">
-              <div className="flex items-center mr-4">
-                <MapPin className="h-4 w-4 mr-1" />
-                <span>San Francisco, CA</span>
-              </div>
-              <div className="flex items-center mr-4">
-                <LinkIcon className="h-4 w-4 mr-1" />
-                <a href="#" className="text-orange-500 hover:underline">
-                  feedme.xyz
-                </a>
-              </div>
-              <div className="flex items-center mr-4">
-                <Calendar className="h-4 w-4 mr-1" />
-                <span>Joined 2024</span>
-              </div>
-            </div>
+            {description && <p className="mt-4 text-gray-800">{description}</p>}
 
             <div className="flex mt-4">
               <div className="mr-4">
@@ -156,7 +152,9 @@ export default function OwnFeedPage() {
         {/* Feed */}
         <div className="divide-y divide-gray-100">
           {posts.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">No activity found.</div>
+            <div className="p-6 text-center text-gray-500">
+              No activity found.
+            </div>
           ) : (
             posts.map((event, idx) => (
               <div key={idx} className="p-4 border-b border-gray-100">

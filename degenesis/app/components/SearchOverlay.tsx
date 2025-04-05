@@ -43,7 +43,7 @@ export default function SearchOverlay({
     }
   
     try {
-      const res = await followUser({
+      const res = await followUser(walletAddress || "", address, {
         follower: address,
         whoToFollow: targetAddress,
         profileOrCommunity: "profile",
@@ -165,10 +165,10 @@ export default function SearchOverlay({
           ) : query ? (
             <div className="p-4 space-y-3">
               <div className="p-3 border rounded-lg hover:bg-gray-50 transition flex items-center justify-between">
-                <div>
+                {/* <div>
                   <div className="font-bold text-gray-900">{query}</div>
                   <div className="text-sm text-gray-500">Matching address for "{query}"</div>
-                </div>
+                </div> */}
                 <button
                   onClick={() => handleFollow(query)}
                   className="text-orange-500 font-medium text-sm hover:underline"

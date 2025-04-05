@@ -1,5 +1,5 @@
 export async function signupUser(wallet: string, description: string) {
-    const url = `https://feedme-backend.vercel.app/v1/signUp?wallet=${wallet}&description=${encodeURIComponent(description)}`;
+    const url = `https://feedme-backend.vercel.app/v1/signUp?wallet=${wallet}&description=${(description)}`;
   
     const response = await fetch(url, {
       method: "POST",

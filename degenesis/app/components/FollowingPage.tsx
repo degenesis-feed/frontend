@@ -90,43 +90,6 @@ export default function FollowingPage({
         <h2 className="text-xl font-bold">Home</h2>
       </div>
 
-      {/* Tweet Composer */}
-      <div className="border-b border-gray-100 px-4 py-3 flex">
-        <div className="mr-4">
-          <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
-            <Image
-              src="/feedme.webp?height=40&width=40"
-              alt="Your profile"
-              width={40}
-              height={40}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-        <div className="flex-1">
-          <textarea
-            id="tweet-input"
-            className="w-full border-0 focus:ring-0 text-lg placeholder-gray-400 py-2 resize-none"
-            placeholder="What's happening?"
-            rows={2}
-            value={tweetText}
-            onChange={(e) => setTweetText(e.target.value)}
-          ></textarea>
-          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-            <div className="flex space-x-2"></div>
-            <button
-              onClick={handleTweet}
-              disabled={!tweetText.trim()}
-              className={`bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 px-4 rounded-full transition-colors ${
-                !tweetText.trim() ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              Tweet
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Feed */}
       {tweets.map((tweet, idx) => (
         <div

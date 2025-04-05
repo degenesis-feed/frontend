@@ -37,56 +37,56 @@ export default function TwitterFrontend() {
   const [tweetText, setTweetText] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [_, setSearchResults] = useState<any[]>([]);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [userProfile, setUserProfile] = useState<{
+  const [_userProfile, setUserProfile] = useState<{
     wallet: string;
     description: string;
     signedUp: boolean;
   } | null>(null);
 
   const [tweets, setTweets] = useState<any[]>([]);
+  const [userDescription, setUserDescription] = useState("Hey there! I'm new here 🚀");
+
 
   useEffect(() => {
     const trySignup = async () => {
       if (!address) return;
-
+  
       const stored = localStorage.getItem("feedme:user");
       let parsed = null;
-
+  
       try {
         parsed = stored ? JSON.parse(stored) : null;
       } catch {
         localStorage.removeItem("feedme:user");
       }
-
+  
       if (parsed?.wallet?.toLowerCase() === address.toLowerCase()) {
         setUserProfile(parsed);
         setWalletAddress(address);
         return;
       }
-
+  
       try {
-        const description = "Hey there! I'm new here 🚀";
-        const res = await signupUser(address, description);
-        console.log("✅ Signup successful:", res.message);
-
+        const res = await signupUser(address, userDescription);
         const userData = {
           wallet: address,
-          description,
+          description: userDescription,
           signedUp: true,
         };
-
         localStorage.setItem("feedme:user", JSON.stringify(userData));
         setUserProfile(userData);
         setWalletAddress(address);
+        console.log("✅ Signup successful:", res.message);
       } catch (err) {
         console.error("❌ Signup failed:", err);
       }
     };
-
+  
     trySignup();
   }, [address]);
+  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -297,6 +297,34 @@ export default function TwitterFrontend() {
           </div>
         </div>
       </header>
+
+      {!_userProfile?.signedUp && address && (
+  <div className="max-w-3xl w-full px-4 mt-4 mx-auto">
+    <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg shadow">
+      <label htmlFor="desc" className="block font-semibold mb-1 text-sm text-gray-700">
+        Enter a short profile bio:
+      </label>
+      <textarea
+        id="desc"
+        rows={3}
+        placeholder="Hey there! I'm new here 🚀"
+        className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-orange-500"
+        value={userDescription}
+        onChange={(e) => setUserDescription(e.target.value)}
+      />
+      <button
+        className="mt-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 px-4 rounded-full"
+        onClick={() => {
+          localStorage.removeItem("feedme:user");
+          window.location.reload();
+        }}
+      >
+        Save & Sign Up Again
+      </button>
+    </div>
+  </div>
+)}
+
 
       {/* Main Content */}
       <div className="flex-grow flex items-start justify-center">

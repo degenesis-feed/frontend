@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import { Users, Eye } from "lucide-react"
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 
 interface Community {
   id: number
@@ -19,6 +19,9 @@ interface Community {
 export default function CommunitiesPage() {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
+  const [verificationType, setVerificationType] = useState("")
+  const [loading, setLoading] = useState(false)
+
   const [communities, setCommunities] = useState<Community[]>([
     {
       id: 1,
@@ -46,7 +49,7 @@ export default function CommunitiesPage() {
     },
   ])
 
-  const router = useRouter();
+  const router = useRouter()
 
   const handleCreateCommunity = (e: React.FormEvent) => {
     e.preventDefault()
@@ -66,25 +69,16 @@ export default function CommunitiesPage() {
     setDescription("")
   }
 
-  // const toggleJoin = (id: number) => {
-  //   setCommunities(prev =>
-  //     prev.map((community) =>
-  //       community.id === id
-  //         ? {
-  //             ...community,
-  //             joined: !community.joined,
-  //             members: community.joined
-  //               ? community.members - 1
-  //               : community.members + 1,
-  //           }
-  //         : community,
-  //     ),
-  //   );
-  // };
-
-  const handleJoinClick = () => {
-    router.push('/verification');
-  };
+  const handleJoinClick = (communityId: number) => {
+    if (!verificationType) {
+      alert("Please select a verification type.")
+      return
+    }
+  
+    // Redirect to verification page with query params
+    router.push(`/verification?type=${verificationType}&communityId=${communityId}`)
+  }
+  
 
   return (
     <div className="space-y-6">
@@ -120,6 +114,21 @@ export default function CommunitiesPage() {
               required
             ></textarea>
           </div>
+           {/* Verification Type Selector */}
+      <div className="bg-white border border-gray-100 rounded-xl p-6">
+        <h2 className="text-xl font-bold mb-4">Select What You Want to Verify</h2>
+        <select
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+          value={verificationType}
+          onChange={(e) => setVerificationType(e.target.value)}
+        >
+          <option value="">-- Select Verification Type --</option>
+          <option value="age">Age</option>
+          <option value="nationality">Nationality</option>
+          <option value="gender">Gender</option>
+        </select>
+      </div>
+
           <button
             type="submit"
             className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-md transition-colors"
@@ -129,6 +138,7 @@ export default function CommunitiesPage() {
         </form>
       </div>
 
+     
       {/* Communities List */}
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="border-b border-gray-100 px-6 py-4">
@@ -157,14 +167,15 @@ export default function CommunitiesPage() {
                 </div>
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => handleJoinClick()}
+                    onClick={() => handleJoinClick(community.id)}
+                    disabled={loading}
                     className={`flex items-center px-4 py-2 rounded-full text-sm font-medium ${
                       community.joined
                         ? "bg-gray-200 hover:bg-gray-300 text-gray-800"
                         : "bg-orange-500 hover:bg-orange-600 text-white"
                     } transition-colors`}
                   >
-                    Join
+                    {loading ? "Verifying..." : "Join"}
                   </button>
                   <button className="flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium transition-colors">
                     <Eye className="h-4 w-4 mr-2" />
@@ -179,4 +190,3 @@ export default function CommunitiesPage() {
     </div>
   )
 }
-
