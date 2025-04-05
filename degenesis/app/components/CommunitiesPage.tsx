@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import { Users, UserPlus, Eye } from "lucide-react"
+import { useRouter } from 'next/navigation';
 
 interface Community {
   id: number
@@ -45,6 +46,8 @@ export default function CommunitiesPage() {
     },
   ])
 
+  const router = useRouter();
+
   const handleCreateCommunity = (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim() || !description.trim()) return
@@ -64,18 +67,24 @@ export default function CommunitiesPage() {
   }
 
   const toggleJoin = (id: number) => {
-    setCommunities(
-      communities.map((community) =>
+    setCommunities(prev =>
+      prev.map((community) =>
         community.id === id
           ? {
               ...community,
               joined: !community.joined,
-              members: community.joined ? community.members - 1 : community.members + 1,
+              members: community.joined
+                ? community.members - 1
+                : community.members + 1,
             }
           : community,
       ),
-    )
-  }
+    );
+  };
+
+  const handleJoinClick = () => {
+    router.push('/verification');
+  };
 
   return (
     <div className="space-y-6">
@@ -148,15 +157,16 @@ export default function CommunitiesPage() {
                 </div>
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => toggleJoin(community.id)}
+                    onClick={() => handleJoinClick()}
                     className={`flex items-center px-4 py-2 rounded-full text-sm font-medium ${
                       community.joined
                         ? "bg-gray-200 hover:bg-gray-300 text-gray-800"
                         : "bg-orange-500 hover:bg-orange-600 text-white"
                     } transition-colors`}
                   >
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    {community.joined ? "Joined" : "Join"}
+                    {/* <UserPlus className="h-4 w-4 mr-2" />
+                    {community.joined ? "Joined" : "Join"} */}
+                    Join
                   </button>
                   <button className="flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium transition-colors">
                     <Eye className="h-4 w-4 mr-2" />
