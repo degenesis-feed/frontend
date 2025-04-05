@@ -199,8 +199,8 @@ export default function TwitterFrontend() {
               <button
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
                   activeTab === "following"
-                    ? "text-orange-500 border-b-2 border-orange-500"
-                    : "text-gray-700 hover:text-orange-500"
+                    ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
+                    : "text-gray-700 hover:text-[--feedme-red]"
                 }`}
                 onClick={() => setActiveTab("following")}
               >
@@ -209,8 +209,8 @@ export default function TwitterFrontend() {
               <button
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
                   activeTab === "communities"
-                    ? "text-orange-500 border-b-2 border-orange-500"
-                    : "text-gray-700 hover:text-orange-500"
+                    ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
+                    : "text-gray-700 hover:text-[--feedme-red]"
                 }`}
                 onClick={() => setActiveTab("communities")}
               >
@@ -219,7 +219,7 @@ export default function TwitterFrontend() {
               <button
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
                   activeTab === "leaderboard"
-                    ? "text-orange-500 border-b-2 border-orange-500"
+                    ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
                     : "text-gray-700 hover:text-orange-500"
                 }`}
                 onClick={() => setActiveTab("leaderboard")}

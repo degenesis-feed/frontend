@@ -103,28 +103,6 @@ export default function FollowingPage({
             />
           </div>
         </div>
-        <div className="flex-1">
-          <textarea
-            id="tweet-input"
-            className="w-full border-0 focus:ring-0 text-lg placeholder-gray-400 py-2 resize-none"
-            placeholder="What's happening?"
-            rows={2}
-            value={tweetText}
-            onChange={(e) => setTweetText(e.target.value)}
-          ></textarea>
-          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-            <div className="flex space-x-2"></div>
-            <button
-              onClick={handleTweet}
-              disabled={!tweetText.trim()}
-              className={`bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 px-4 rounded-full transition-colors ${
-                !tweetText.trim() ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              Tweet
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* Feed */}
