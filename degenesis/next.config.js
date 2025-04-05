@@ -1,7 +1,11 @@
-// Path: next.config.js
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  webpack: (config) => {
-    config.externals.push("pino-pretty", "lokijs", "encoding");
-    return config;
-  },
+  output: 'export', // Enables static export
+  // Optional configurations:
+  // trailingSlash: true, // Adds trailing slashes to URLs
+  distDir: 'dist', // Changes the output directory from 'out' to 'dist'
 };
+
+module.exports = nextConfig;

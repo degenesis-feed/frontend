@@ -73,6 +73,7 @@ export default function LeaderboardPage() {
   ]
 
   return (
+    <>
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
       <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-8 text-white">
         <h2 className="text-2xl font-bold flex items-center">
@@ -159,6 +160,7 @@ export default function LeaderboardPage() {
         ))}
       </div>
     </div>
-  )
+    </>
+    )
 }
 
