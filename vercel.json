@@ -8,5 +8,11 @@
                 "distDir": "degenesis/.next"
             }
         }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
     ]
 }
