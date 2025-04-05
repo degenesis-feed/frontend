@@ -41,16 +41,25 @@ export default function OwnFeedPage() {
   }, [walletAddress]);
 
   function formatEvent(event: FeedEvent, userAddress: string) {
-    const isSender = event.from.toLowerCase() === userAddress.toLowerCase();
+    const isSender = event.from?.toLowerCase() === userAddress?.toLowerCase();
     const direction = isSender ? "sent" : "received";
     const counterparty = isSender ? event.to : event.from;
-    const amount = (Number(event.value) / Math.pow(10, event.contract.decimals)).toFixed(2);
-    const date = new Date(event.timestamp * 1000).toLocaleDateString();
-
-    return `You ${direction} ${amount} ${event.contract.symbol} ${
+  
+    const decimals = event.contract?.decimals ?? 18;
+    const rawValue = Number(event.value ?? 0);
+    const amount = (rawValue / Math.pow(10, decimals)).toFixed(2);
+  
+    const symbol = event.contract?.symbol ?? "UNKNOWN";
+    const date = event.timestamp
+      ? new Date(event.timestamp * 1000).toLocaleDateString()
+      : "Unknown Date";
+  
+    return `You ${direction} ${amount} ${symbol} ${
       isSender ? "to" : "from"
     } ${shortenAddress(counterparty)} on ${date}`;
   }
+  
+  
 
   function shortenAddress(addr: string): string {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
@@ -62,7 +71,7 @@ export default function OwnFeedPage() {
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="h-48 bg-gradient-to-r from-orange-400 to-orange-600 relative">
           <Image
-            src="/placeholder.svg?height=400&width=1200"
+            src="/feedme.webp"
             alt="Cover photo"
             fill
             className="object-cover"
@@ -71,7 +80,7 @@ export default function OwnFeedPage() {
         <div className="px-6 pb-6 relative">
           <div className="absolute -top-16 left-6 border-4 border-white rounded-full overflow-hidden h-32 w-32 bg-white shadow-md">
             <Image
-              src="/placeholder.svg?height=128&width=128"
+              src="/feedme.webp?height=128&width=128"
               alt="Profile picture"
               width={128}
               height={128}
@@ -129,7 +138,7 @@ export default function OwnFeedPage() {
       {/* Tabs */}
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="flex border-b border-gray-100">
-          {["posts", "replies", "media", "likes"].map((tab) => (
+          {["posts"].map((tab) => (
             <button
               key={tab}
               className={`flex-1 py-4 text-center font-medium ${

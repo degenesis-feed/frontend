@@ -22,7 +22,7 @@ export default function CommunitiesPage() {
   const [communities, setCommunities] = useState<Community[]>([
     {
       id: 1,
-      name: "Tech Enthusiasts",
+      name: "Tech Enthusiasts from Taiwan",
       description: "A community for tech lovers to discuss the latest trends and innovations.",
       members: 1245,
       image: "/placeholder.svg?height=80&width=80",
@@ -30,7 +30,7 @@ export default function CommunitiesPage() {
     },
     {
       id: 2,
-      name: "Web Developers",
+      name: "Web Developers from USA",
       description: "Connect with other web developers and share your knowledge and experiences.",
       members: 3782,
       image: "/placeholder.svg?height=80&width=80",
@@ -38,7 +38,7 @@ export default function CommunitiesPage() {
     },
     {
       id: 3,
-      name: "UI/UX Designers",
+      name: "UI/UX Designers from Europe",
       description: "Share design inspiration, get feedback, and discuss design principles.",
       members: 952,
       image: "/placeholder.svg?height=80&width=80",
@@ -140,7 +140,7 @@ export default function CommunitiesPage() {
               <div className="flex items-start">
                 <div className="h-20 w-20 rounded-lg bg-gray-200 overflow-hidden mr-4">
                   <Image
-                    src={community.image || "/placeholder.svg"}
+                    src={"/feedme.webp"}
                     alt={community.name}
                     width={80}
                     height={80}
@@ -164,8 +164,6 @@ export default function CommunitiesPage() {
                         : "bg-orange-500 hover:bg-orange-600 text-white"
                     } transition-colors`}
                   >
-                    {/* <UserPlus className="h-4 w-4 mr-2" />
-                    {community.joined ? "Joined" : "Join"} */}
                     Join
                   </button>
                   <button className="flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium transition-colors">
