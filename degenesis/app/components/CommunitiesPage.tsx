@@ -20,7 +20,7 @@ export default function CommunitiesPage() {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [verificationType, setVerificationType] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading,] = useState(false)
 
   const [communities, setCommunities] = useState<Community[]>([
     {

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Calendar, MapPin, LinkIcon } from "lucide-react";
 import { useAccount } from "wagmi";
 import { fetchOwnFeed } from "../lib/feed";
 
@@ -50,8 +49,8 @@ export default function OwnFeedPage() {
           if (parsed?.description) {
             setDescription(parsed.description);
           }
-        } catch (e) {
-          console.warn("Invalid user profile in localStorage.");
+        } catch (err) {
+          console.warn("Invalid user profile in localStorage.", err);
         }
       }
     }

@@ -37,7 +37,8 @@ export default function TwitterFrontend() {
   const [tweetText, setTweetText] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [_, setSearchResults] = useState<any[]>([]);
+  
+  const [, setSearchResults] = useState<any[]>([]);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [_userProfile, setUserProfile] = useState<{
     wallet: string;
@@ -85,6 +86,7 @@ export default function TwitterFrontend() {
     };
   
     trySignup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
   
 
