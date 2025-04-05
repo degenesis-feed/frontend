@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Home, Search } from "lucide-react";
+import TransactionForm from "./components/TransactionForm";
 import Image from "next/image";
 import Link from "next/link";
 import LeaderboardPage from "./components/LeaderboardPage";
@@ -333,6 +334,9 @@ export default function TwitterFrontend() {
         <main className="max-w-3xl w-full px-4 py-6">
           {/* Main Feed */}
           <div className="w-full">
+            <div className="max-w-4xl mx-auto px-4 py-4">
+              <TransactionForm />
+            </div>
             {activeTab === "following" && (
               <FollowingPage
                 tweetText={tweetText}
