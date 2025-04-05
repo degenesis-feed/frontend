@@ -1,18 +1,12 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "use": "@vercel/static-build",
-            "src": "degenesis/package.json",
-            "config": {
-                "distDir": "degenesis/.next"
-            }
-        }
-    ],
+    "buildCommand": "cd degenesis && npm install && npm run build",
+    "outputDirectory": "degenesis/.next",
+    "framework": "nextjs",
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/"
+            "destination": "/degenesis/$1"
         }
     ]
 }
