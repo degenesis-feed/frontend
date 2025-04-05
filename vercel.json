@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npm install && npm run dev",
+    "buildCommand": "npm install --save-dev @types/node && npm install && npm run dev",
     "outputDirectory": "degenesis/.next",
     "framework": "nextjs",
     "rewrites": [
