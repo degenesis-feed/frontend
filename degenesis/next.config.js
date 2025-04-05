@@ -15,4 +15,6 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  basePath: '/degenesis',
+  assetPrefix: '/degenesis',
 };
