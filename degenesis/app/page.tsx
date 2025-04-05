@@ -7,7 +7,7 @@ import Link from "next/link";
 import LeaderboardPage from "./components/LeaderboardPage";
 import CommunitiesPage from "./components/CommunitiesPage";
 import FollowingPage from "./components/FollowingPage";
-
+import OwnFeedPage from "./components/OwnFeedPage";
 import { createAppKit } from "@reown/appkit/react";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { base, baseSepolia } from "@reown/appkit/networks";
@@ -108,25 +108,35 @@ export default function TwitterFrontend() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900 flex flex-col">
       {/* Navbar */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4 w-full">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="h-8 w-8 text-orange-500 flex items-center justify-center">
+                <div className="h-20 w-20 text-orange-500 flex items-center justify-center">
                   <Image
                     src="/feedme.webp"
                     alt="Profile"
                     width={50}
                     height={50}
-                    className="w-12 h-12 object-cover" // Tailwind classes: 6rem = 96px
+                    className="w-12 h-12 object-cover"
                   />
                 </div>
               </div>
             </div>
             <nav className="hidden md:flex space-x-10">
+              <button
+                className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
+                  activeTab === "following"
+                    ? "text-orange-500 border-b-2 border-orange-500"
+                    : "text-gray-700 hover:text-orange-500"
+                }`}
+                onClick={() => setActiveTab("following")}
+              >
+                Following
+              </button>
               <button
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
                   activeTab === "communities"
@@ -149,13 +159,13 @@ export default function TwitterFrontend() {
               </button>
               <button
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
-                  activeTab === "following"
+                  activeTab === "ownfeed"
                     ? "text-orange-500 border-b-2 border-orange-500"
                     : "text-gray-700 hover:text-orange-500"
                 }`}
-                onClick={() => setActiveTab("following")}
+                onClick={() => setActiveTab("ownfeed")}
               >
-                Following
+                My Profile
               </button>
             </nav>
             <div className="flex items-center">
@@ -204,57 +214,42 @@ export default function TwitterFrontend() {
             >
               Following
             </button>
+            <button
+              className={`flex items-center justify-center py-3 flex-1 text-sm font-medium transition-colors ${
+                activeTab === "ownfeed"
+                  ? "text-orange-500 border-b-2 border-orange-500"
+                  : "text-gray-700"
+              }`}
+              onClick={() => setActiveTab("ownfeed")}
+            >
+              My Profile
+            </button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 px-4 py-6">
-        {/* Left Sidebar */}
-        <div className="hidden md:block md:col-span-1">
-          <div className="sticky top-20">
-            <nav className="space-y-1">
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                 <Image
-                    src="/feedme.webp?height=100&width=100"
-                    alt="Profile"
-                    width={50}
-                    height={50}
-                  />
-                <span className="text-lg font-medium">Home</span>
-              </Link>
-            </nav>
-            <button
-              onClick={() => {
-                setActiveTab("following");
-                document.getElementById("tweet-input")?.focus();
-              }}
-              className="mt-6 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-full transition-colors"
-            >
-              Tweet
-            </button>
+      <div className="flex-grow flex items-start justify-center">
+        <main className="max-w-3xl w-full px-4 py-6">
+          {/* Main Feed */}
+          <div className="w-full">
+            {activeTab === "following" && (
+              <FollowingPage
+                tweets={tweets}
+                tweetText={tweetText}
+                setTweetText={setTweetText}
+                handleTweet={handleTweet}
+              />
+            )}
+
+            {activeTab === "communities" && <CommunitiesPage />}
+
+            {activeTab === "leaderboard" && <LeaderboardPage />}
+            
+            {activeTab === "ownfeed" && <OwnFeedPage />}
           </div>
-        </div>
-
-        {/* Main Feed */}
-        <div className="md:col-span-2">
-          {activeTab === "following" && (
-            <FollowingPage
-              tweets={tweets}
-              tweetText={tweetText}
-              setTweetText={setTweetText}
-              handleTweet={handleTweet}
-            />
-          )}
-
-          {activeTab === "communities" && <CommunitiesPage />}
-
-          {activeTab === "leaderboard" && <LeaderboardPage />}
-        </div>
-      </main>
+        </main>
+      </div>
 
       {/* Mobile Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-3">
