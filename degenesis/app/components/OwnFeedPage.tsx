@@ -162,7 +162,7 @@ export default function OwnFeedPage() {
       {/* Tabs */}
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="flex border-b border-gray-100">
-          {["posts", "replies", "media", "likes"].map((tab) => (
+          {["posts"].map((tab) => (
             <button
               key={tab}
               className={`flex-1 py-4 text-center font-medium ${
