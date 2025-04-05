@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Bell, Bookmark, Hash, Home, Mail, MoreHorizontal, Search, User, Pizza } from "lucide-react"
+import { Home} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import LeaderboardPage from "./components/LeaderboardPage"
@@ -115,7 +115,13 @@ export default function TwitterFrontend() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="h-8 w-8 text-orange-500 flex items-center justify-center">
-                  <Pizza className="h-8 w-8" />
+                <Image
+                    src="/FeedMe.webp?height=32&width=32"
+                    alt="Profile"
+                    width={32}
+                    height={32}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -291,15 +297,6 @@ export default function TwitterFrontend() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-3">
         <Link href="#" className="p-2 text-gray-700 hover:text-orange-500">
           <Home className="h-6 w-6" />
-        </Link>
-        <Link href="#" className="p-2 text-gray-700 hover:text-orange-500">
-          <Search className="h-6 w-6" />
-        </Link>
-        <Link href="#" className="p-2 text-gray-700 hover:text-orange-500">
-          <Bell className="h-6 w-6" />
-        </Link>
-        <Link href="#" className="p-2 text-gray-700 hover:text-orange-500">
-          <Mail className="h-6 w-6" />
         </Link>
       </nav>
     </div>
