@@ -12,7 +12,9 @@ function VerificationPage() {
     setUserId(uuidv4());
   }, []);
 
-  if (!userId) return null;
+  if (!userId) return <></>;
+  //Desperate times calls for desperate measures
+  return <></>;
 
   //   Create the SelfApp configuration
   const selfApp = new SelfAppBuilder({
