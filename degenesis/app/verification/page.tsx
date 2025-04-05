@@ -14,7 +14,7 @@ function VerificationPage() {
 
   if (!userId) return null;
 
-  // Create the SelfApp configuration
+  //   Create the SelfApp configuration
   const selfApp = new SelfAppBuilder({
     appName: "My Application",
     scope: "feedme",
