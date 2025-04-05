@@ -308,12 +308,12 @@ export default function TwitterFrontend() {
         id="desc"
         rows={3}
         placeholder="Hey there! I'm new here 🚀"
-        className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-orange-500"
+        className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-[feedme-red]"
         value={userDescription}
         onChange={(e) => setUserDescription(e.target.value)}
       />
       <button
-        className="mt-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 px-4 rounded-full"
+        className="mt-2 bg-orange-500 hover:bg-[feedme-red-dark] text-white font-bold py-1.5 px-4 rounded-full"
         onClick={() => {
           localStorage.removeItem("feedme:user");
           window.location.reload();
