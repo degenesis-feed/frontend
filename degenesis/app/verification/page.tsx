@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SelfQRcodeWrapper, { SelfAppBuilder } from '@selfxyz/qrcode';
 // import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +8,7 @@ function VerificationPage() {
   // const [userId, setUserId] = useState<string | null>(null);
 
 
-  const [address, setAddress] = useState("0xAA6C32B4C3B869201A3e162F24bBe37BCacB02D9");
+  const [address, _] = useState("0xAA6C32B4C3B869201A3e162F24bBe37BCacB02D9");
 
   // useEffect(() => {
   //   // Generate a user ID when the component mounts

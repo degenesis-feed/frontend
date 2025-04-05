@@ -29,8 +29,6 @@ export default function SearchOverlay({
 
   const { address } = useAccount();
 
-  const isValidAddress = (addr: string) => /^0x[a-fA-F0-9]{40}$/.test(addr);
-
   const handleFollow = async (targetAddress: string) => {
     if (!address) {
       alert("Connect your wallet first.");

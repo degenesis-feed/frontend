@@ -31,9 +31,6 @@ interface FollowingPageProps {
 }
 
 export default function FollowingPage({
-  tweetText,
-  setTweetText,
-  handleTweet,
 }: FollowingPageProps) {
   const { address } = useAccount();
   const [tweets, setTweets] = useState<Tweet[]>([]);
@@ -44,7 +41,7 @@ export default function FollowingPage({
     const loadFeed = async () => {
       try {
         const rawFeed = await fetchFeed(address);
-  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const transformed = rawFeed.map((item: any, idx: number) => {
           const value = item?.value ?? "0";
           const to = item?.to ?? "0x0000000000000000000000000000000000000000";
@@ -90,24 +87,6 @@ export default function FollowingPage({
         <h2 className="text-xl font-bold">Home</h2>
       </div>
 
-<<<<<<< HEAD
-=======
-      {/* Tweet Composer */}
-      <div className="border-b border-gray-100 px-4 py-3 flex">
-        <div className="mr-4">
-          <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
-            <Image
-              src="/feedme.webp?height=40&width=40"
-              alt="Your profile"
-              width={40}
-              height={40}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
->>>>>>> 28ded8f613ad934ebd59f0f7649faa9c253627f8
       {/* Feed */}
       {tweets.map((tweet, idx) => (
         <div
