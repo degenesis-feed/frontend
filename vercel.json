@@ -2,8 +2,8 @@
     "version": 2,
     "builds": [
         {
-            "src": "degenesis/package.json",
             "use": "@vercel/static-build",
+            "src": "degenesis/package.json",
             "config": {
                 "distDir": "degenesis/.next"
             }
