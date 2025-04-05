@@ -90,6 +90,24 @@ export default function FollowingPage({
         <h2 className="text-xl font-bold">Home</h2>
       </div>
 
+<<<<<<< HEAD
+=======
+      {/* Tweet Composer */}
+      <div className="border-b border-gray-100 px-4 py-3 flex">
+        <div className="mr-4">
+          <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
+            <Image
+              src="/feedme.webp?height=40&width=40"
+              alt="Your profile"
+              width={40}
+              height={40}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+>>>>>>> 28ded8f613ad934ebd59f0f7649faa9c253627f8
       {/* Feed */}
       {tweets.map((tweet, idx) => (
         <div
