@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "use": "@vercel/static-build",
+            "src": "degenesis/package.json",
+            "config": {
+                "distDir": "degenesis/.next"
+            }
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
+}
