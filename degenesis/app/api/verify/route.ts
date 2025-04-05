@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
     // Initialize and configure the verifier
     const selfBackendVerifier = new SelfBackendVerifier(
       'feedme', 
-      "https://bc75-111-235-226-130.ngrok-free.app/api/verify", // Replace with ngrok URL
-      "hex", // You may replace this with an actual userId or other identifier if required
+      "https://fac0-111-235-226-130.ngrok-free.app/api/verify", // Replace with ngrok URL
+      "uuid", // You may replace this with an actual userId or other identifier if required
       true // Assuming `true` is the verification flag
     );
 

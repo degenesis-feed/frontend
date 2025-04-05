@@ -300,7 +300,7 @@ export default function TwitterFrontend() {
         </div>
       </header>
 
-      {!_userProfile?.signedUp && address && (
+      {/* {!_userProfile?.signedUp && address && (
   <div className="max-w-3xl w-full px-4 mt-4 mx-auto">
     <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg shadow">
       <label htmlFor="desc" className="block font-semibold mb-1 text-sm text-gray-700">
@@ -325,7 +325,7 @@ export default function TwitterFrontend() {
       </button>
     </div>
   </div>
-)}
+)} */}
 
 
       {/* Main Content */}

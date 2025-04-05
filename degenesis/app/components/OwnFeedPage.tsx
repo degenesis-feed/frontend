@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Calendar, MapPin, LinkIcon } from "lucide-react";
 import { useAccount } from "wagmi";
 import { fetchOwnFeed } from "../lib/feed";
 
@@ -23,7 +24,6 @@ export default function OwnFeedPage() {
   const { address: walletAddress } = useAccount();
   const [posts, setPosts] = useState<FeedEvent[]>([]);
   const [activeTab, setActiveTab] = useState("posts");
-  const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
     if (!walletAddress) return;
@@ -40,37 +40,14 @@ export default function OwnFeedPage() {
     loadFeed();
   }, [walletAddress]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedUser = localStorage.getItem("feedme:user");
-      if (storedUser) {
-        try {
-          const parsed = JSON.parse(storedUser);
-          if (parsed?.description) {
-            setDescription(parsed.description);
-          }
-        } catch (err) {
-          console.warn("Invalid user profile in localStorage.", err);
-        }
-      }
-    }
-  }, []);
-
   function formatEvent(event: FeedEvent, userAddress: string) {
-    const isSender = event.from?.toLowerCase() === userAddress?.toLowerCase();
+    const isSender = event.from.toLowerCase() === userAddress.toLowerCase();
     const direction = isSender ? "sent" : "received";
     const counterparty = isSender ? event.to : event.from;
+    const amount = (Number(event.value) / Math.pow(10, event.contract?.decimals)).toFixed(2);
+    const date = new Date(event.timestamp * 1000).toLocaleDateString();
 
-    const decimals = event.contract?.decimals ?? 18;
-    const rawValue = Number(event.value ?? 0);
-    const amount = (rawValue / Math.pow(10, decimals)).toFixed(2);
-
-    const symbol = event.contract?.symbol ?? "UNKNOWN";
-    const date = event.timestamp
-      ? new Date(event.timestamp * 1000).toLocaleDateString()
-      : "Unknown Date";
-
-    return `You ${direction} ${amount} ${symbol} ${
+    return `You ${direction} ${amount} ${event.contract.symbol} ${
       isSender ? "to" : "from"
     } ${shortenAddress(counterparty)} on ${date}`;
   }
@@ -110,11 +87,30 @@ export default function OwnFeedPage() {
 
           <div className="mt-6">
             <h1 className="text-2xl font-bold">FeedMe User</h1>
-            <p className="text-gray-500">
-              {walletAddress ? shortenAddress(walletAddress) : "Not connected"}
+            <p className="text-gray-500">{walletAddress ? shortenAddress(walletAddress) : "Not connected"}</p>
+
+            <p className="mt-4 text-gray-800">
+              Frontend developer & UI/UX enthusiast. Building beautiful web
+              experiences with React & Next.js. Always learning, always
+              creating.
             </p>
 
-            {description && <p className="mt-4 text-gray-800">{description}</p>}
+            <div className="flex flex-wrap gap-y-2 mt-3 text-gray-500">
+              <div className="flex items-center mr-4">
+                <MapPin className="h-4 w-4 mr-1" />
+                <span>San Francisco, CA</span>
+              </div>
+              <div className="flex items-center mr-4">
+                <LinkIcon className="h-4 w-4 mr-1" />
+                <a href="#" className="text-orange-500 hover:underline">
+                  feedme.xyz
+                </a>
+              </div>
+              <div className="flex items-center mr-4">
+                <Calendar className="h-4 w-4 mr-1" />
+                <span>Joined 2024</span>
+              </div>
+            </div>
 
             <div className="flex mt-4">
               <div className="mr-4">
@@ -133,7 +129,7 @@ export default function OwnFeedPage() {
       {/* Tabs */}
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="flex border-b border-gray-100">
-          {["posts"].map((tab) => (
+          {["posts", "replies", "media", "likes"].map((tab) => (
             <button
               key={tab}
               className={`flex-1 py-4 text-center font-medium ${
@@ -151,9 +147,7 @@ export default function OwnFeedPage() {
         {/* Feed */}
         <div className="divide-y divide-gray-100">
           {posts.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">
-              No activity found.
-            </div>
+            <div className="p-6 text-center text-gray-500">No activity found.</div>
           ) : (
             posts.map((event, idx) => (
               <div key={idx} className="p-4 border-b border-gray-100">

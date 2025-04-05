@@ -2,10 +2,10 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Users, Eye } from "lucide-react"
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams} from 'next/navigation'
 
 interface Community {
   id: number
@@ -50,6 +50,9 @@ export default function CommunitiesPage() {
   ])
 
   const router = useRouter()
+  const searchParams = useSearchParams();
+
+const communityId = searchParams.get("communityId");
 
   const handleCreateCommunity = (e: React.FormEvent) => {
     e.preventDefault()
@@ -78,6 +81,18 @@ export default function CommunitiesPage() {
     // Redirect to verification page with query params
     router.push(`/verification?type=${verificationType}&communityId=${communityId}`)
   }
+
+  useEffect(() => {
+    const stored = localStorage.getItem("feedme:communities");
+    if (stored) {
+      setCommunities(JSON.parse(stored));
+    }
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem("feedme:communities", JSON.stringify(communities));
+  }, [communities]);
+  
   
 
   return (

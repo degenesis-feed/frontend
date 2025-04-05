@@ -2,10 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 import SelfQRcodeWrapper, { SelfAppBuilder } from '@selfxyz/qrcode';
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import { v4 as uuidv4 } from 'uuid';
 
 function VerificationPage() {
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [userId, setUserId] = useState<string | null>(null);
+  const communityId = searchParams.get("communityId");
+  const verificationType = searchParams.get("type");
+
+  useEffect(() => {
+    setUserId(uuidv4());
+  }, []);
+
 
   useEffect(() => {
     // Generate a user ID when the component mounts
@@ -18,7 +30,7 @@ function VerificationPage() {
   const selfApp = new SelfAppBuilder({
     appName: "FeedMe",
     scope: "feedme",
-    endpoint: "https://bc75-111-235-226-130.ngrok-free.app/api/verify",
+    endpoint: "https://fac0-111-235-226-130.ngrok-free.app/api/verify",
     userId,
     disclosures: {
         minimumAge: 18,
@@ -35,6 +47,7 @@ function VerificationPage() {
         onSuccess={() => {
           // Handle successful verification
           console.log("Verification successful!");
+          router.push(`/community/${communityId}`); // ✅ redirect after proof
           // Redirect or update UI
         }}
         size={350}
