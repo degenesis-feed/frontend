@@ -3,7 +3,7 @@
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import {
-  Search, X, Clock, User, Hash, MessageSquare, Loader2
+  Search, X, Clock, MessageSquare, Loader2
 } from "lucide-react";
 import { followUser } from "../lib/follow";
 import { useAccount } from "wagmi";
