@@ -140,15 +140,6 @@ export default function TwitterFrontend() {
               </button>
             </nav>
             <div className="flex items-center">
-              <button className="p-2 rounded-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-colors">
-                <Search className="h-5 w-5" />
-              </button>
-              <button className="ml-2 p-2 rounded-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-colors">
-                <Bell className="h-5 w-5" />
-              </button>
-              <button className="ml-2 p-2 rounded-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-colors">
-                <Mail className="h-5 w-5" />
-              </button>
               <button className="ml-4 flex items-center">
                 <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
                   <Image
@@ -198,48 +189,6 @@ export default function TwitterFrontend() {
               >
                 <Home className="h-6 w-6 mr-4" />
                 <span className="text-lg font-medium">Home</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                <Hash className="h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">Explore</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                <Bell className="h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">Notifications</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                <Mail className="h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">Messages</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                <Bookmark className="h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">Bookmarks</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                <User className="h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">Profile</span>
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-50 rounded-full transition-colors"
-              >
-                <MoreHorizontal className="h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">More</span>
               </Link>
             </nav>
             <button
@@ -334,42 +283,6 @@ export default function TwitterFrontend() {
               <button className="text-orange-500 hover:text-orange-600 text-sm mt-4 font-medium">Show more</button>
             </div>
 
-            <div className="bg-gray-50 rounded-xl p-4">
-              <h3 className="font-bold text-xl mb-3">Trends for you</h3>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">Technology · Trending</span>
-                    <button className="text-gray-500 hover:text-orange-500 p-1 rounded-full hover:bg-orange-50 transition-colors">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="font-bold">#NextJS</div>
-                  <div className="text-xs text-gray-500">5,128 Tweets</div>
-                </div>
-                <div>
-                  <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">Sports · Trending</span>
-                    <button className="text-gray-500 hover:text-orange-500 p-1 rounded-full hover:bg-orange-50 transition-colors">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="font-bold">#WorldCup2026</div>
-                  <div className="text-xs text-gray-500">125K Tweets</div>
-                </div>
-                <div>
-                  <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">Entertainment · Trending</span>
-                    <button className="text-gray-500 hover:text-orange-500 p-1 rounded-full hover:bg-orange-50 transition-colors">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="font-bold">#MovieAwards</div>
-                  <div className="text-xs text-gray-500">42.5K Tweets</div>
-                </div>
-              </div>
-              <button className="text-orange-500 hover:text-orange-600 text-sm mt-4 font-medium">Show more</button>
-            </div>
           </div>
         </div>
       </main>
