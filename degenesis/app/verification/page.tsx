@@ -18,8 +18,7 @@ function VerificationPage() {
   const selfApp = new SelfAppBuilder({
     appName: "My Application",
     scope: "feedme",
-    endpoint: "https://degenesis-eight.vercel.app/api/verify",
-    endpointType: "https",
+    endpoint: "https://bc75-111-235-226-130.ngrok-free.app/api/verify",
     userId,
     disclosures: {
         minimumAge: 18,

@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import Image from "next/image"
-import { Users, UserPlus, Eye } from "lucide-react"
+import { Users, Eye } from "lucide-react"
 import { useRouter } from 'next/navigation';
 
 interface Community {
@@ -66,21 +66,21 @@ export default function CommunitiesPage() {
     setDescription("")
   }
 
-  const toggleJoin = (id: number) => {
-    setCommunities(prev =>
-      prev.map((community) =>
-        community.id === id
-          ? {
-              ...community,
-              joined: !community.joined,
-              members: community.joined
-                ? community.members - 1
-                : community.members + 1,
-            }
-          : community,
-      ),
-    );
-  };
+  // const toggleJoin = (id: number) => {
+  //   setCommunities(prev =>
+  //     prev.map((community) =>
+  //       community.id === id
+  //         ? {
+  //             ...community,
+  //             joined: !community.joined,
+  //             members: community.joined
+  //               ? community.members - 1
+  //               : community.members + 1,
+  //           }
+  //         : community,
+  //     ),
+  //   );
+  // };
 
   const handleJoinClick = () => {
     router.push('/verification');
