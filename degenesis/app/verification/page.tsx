@@ -16,7 +16,7 @@ function VerificationPage() {
 
   //   Create the SelfApp configuration
   const selfApp = new SelfAppBuilder({
-    appName: "My Application",
+    appName: "FeedMe",
     scope: "feedme",
     endpoint: "https://bc75-111-235-226-130.ngrok-free.app/api/verify",
     userId,
