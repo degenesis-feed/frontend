@@ -220,7 +220,7 @@ export default function TwitterFrontend() {
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
                   activeTab === "leaderboard"
                     ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
-                    : "text-gray-700 hover:text-orange-500"
+                    : "text-gray-700 hover:text-[--feedme-red]"
                 }`}
                 onClick={() => setActiveTab("leaderboard")}
               >
@@ -229,8 +229,8 @@ export default function TwitterFrontend() {
               <button
                 className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
                   activeTab === "ownfeed"
-                    ? "text-orange-500 border-b-2 border-orange-500"
-                    : "text-gray-700 hover:text-orange-500"
+                    ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
+                    : "text-gray-700 hover:text-[--feedme-red]"
                 }`}
                 onClick={() => setActiveTab("ownfeed")}
               >
@@ -245,7 +245,7 @@ export default function TwitterFrontend() {
               >
                 <Search className="h-5 w-5" />
                 {searchQuery && (
-                  <span className="absolute top-0 right-0 h-2 w-2 bg-orange-500 rounded-full"></span>
+                  <span className="absolute top-0 right-0 h-2 w-2 bg-[--feedme-red] rounded-full"></span>
                 )}
               </button>
             </div>
@@ -257,7 +257,7 @@ export default function TwitterFrontend() {
             <button
               className={`flex items-center justify-center py-3 flex-1 text-sm font-medium transition-colors ${
                 activeTab === "communities"
-                  ? "text-orange-500 border-b-2 border-orange-500"
+                  ? "text-[--feedme-red] border-b-2 border-orange-500"
                   : "text-gray-700"
               }`}
               onClick={() => setActiveTab("communities")}
@@ -267,7 +267,7 @@ export default function TwitterFrontend() {
             <button
               className={`flex items-center justify-center py-3 flex-1 text-sm font-medium transition-colors ${
                 activeTab === "leaderboard"
-                  ? "text-orange-500 border-b-2 border-orange-500"
+                  ? "text-orange-500 border-b-2 border-[--feedme-red]"
                   : "text-gray-700"
               }`}
               onClick={() => setActiveTab("leaderboard")}
@@ -277,7 +277,7 @@ export default function TwitterFrontend() {
             <button
               className={`flex items-center justify-center py-3 flex-1 text-sm font-medium transition-colors ${
                 activeTab === "following"
-                  ? "text-orange-500 border-b-2 border-orange-500"
+                  ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
                   : "text-gray-700"
               }`}
               onClick={() => setActiveTab("following")}
@@ -287,7 +287,7 @@ export default function TwitterFrontend() {
             <button
               className={`flex items-center justify-center py-3 flex-1 text-sm font-medium transition-colors ${
                 activeTab === "ownfeed"
-                  ? "text-orange-500 border-b-2 border-orange-500"
+                  ? "text-[--feedme-red] border-b-2 border-[--feedme-red]"
                   : "text-gray-700"
               }`}
               onClick={() => setActiveTab("ownfeed")}
@@ -350,7 +350,7 @@ export default function TwitterFrontend() {
 
       {/* Mobile Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-3">
-        <Link href="#" className="p-2 text-gray-700 hover:text-orange-500">
+        <Link href="#" className="p-2 text-gray-700 hover:text-[--feedme-red]">
           <Home className="h-6 w-6" />
         </Link>
       </nav>
