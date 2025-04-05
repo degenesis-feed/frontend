@@ -1,6 +1,6 @@
 export async function fetchOwnFeed(walletAddress: string) {
     const response = await fetch(
-      `https://feedme-backend-git-main-jacksmith-degaminggrous-projects.vercel.app/v1/feed/${walletAddress}`
+      `https://feedme-backend.vercel.app/v1/feed/${walletAddress}`
     );
   
     if (!response.ok) {

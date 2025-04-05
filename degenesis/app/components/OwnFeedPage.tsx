@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Calendar, MapPin, LinkIcon, MoreHorizontal } from "lucide-react";
-import { fetchOwnFeed } from "../lib/feed"; // Make sure this path is correct
+import { Calendar, MapPin, LinkIcon } from "lucide-react";
+import { useAccount } from "wagmi";
+import { fetchOwnFeed } from "../lib/feed";
 
 interface FeedEvent {
   from: string;
@@ -20,45 +21,30 @@ interface FeedEvent {
 }
 
 export default function OwnFeedPage() {
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const { address: walletAddress } = useAccount();
   const [posts, setPosts] = useState<FeedEvent[]>([]);
   const [activeTab, setActiveTab] = useState("posts");
 
-  // 🔌 Listen for Reown AppKit wallet connect event
   useEffect(() => {
-    const handleWalletConnected = (event: any) => {
-      const address = event.detail?.address;
-      if (address) {
-        setWalletAddress(address);
+    if (!walletAddress) return;
+
+    const loadFeed = async () => {
+      try {
+        const data = await fetchOwnFeed(walletAddress);
+        setPosts(data || []);
+      } catch (err) {
+        console.error("Error fetching own feed:", err);
       }
     };
 
-    window.addEventListener("appkit:connected", handleWalletConnected);
-
-    return () => {
-      window.removeEventListener("appkit:connected", handleWalletConnected);
-    };
-  }, []);
-
-  // 🔄 Optional: Check if already connected
-  useEffect(() => {
-    const checkInitialConnection = () => {
-      const detail = (window as any).appkit?.connection?.getState?.();
-      if (detail?.address) {
-        setWalletAddress(detail.address);
-      }
-    };
-
-    checkInitialConnection();
-  }, []);
+    loadFeed();
+  }, [walletAddress]);
 
   function formatEvent(event: FeedEvent, userAddress: string) {
     const isSender = event.from.toLowerCase() === userAddress.toLowerCase();
     const direction = isSender ? "sent" : "received";
     const counterparty = isSender ? event.to : event.from;
-    const amount = (
-      Number(event.value) / Math.pow(10, event.contract.decimals)
-    ).toFixed(2);
+    const amount = (Number(event.value) / Math.pow(10, event.contract.decimals)).toFixed(2);
     const date = new Date(event.timestamp * 1000).toLocaleDateString();
 
     return `You ${direction} ${amount} ${event.contract.symbol} ${
@@ -70,28 +56,9 @@ export default function OwnFeedPage() {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   }
 
-  // 🧠 Fetch own feed when wallet is available
-  useEffect(() => {
-    const loadFeed = async () => {
-      if (!walletAddress) return;
-
-      try {
-        const data = await fetchOwnFeed(walletAddress);
-        console.log('====================================');
-        console.log("Fetched own feed:", data);
-        console.log('====================================');
-        setPosts(data || []);
-      } catch (error) {
-        console.error("Error fetching own feed:", error);
-      }
-    };
-
-    loadFeed();
-  }, [walletAddress]);
-
   return (
     <div className="space-y-4">
-      {/* Profile + Posts */}
+      {/* Profile Card */}
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="h-48 bg-gradient-to-r from-orange-400 to-orange-600 relative">
           <Image
@@ -119,8 +86,8 @@ export default function OwnFeedPage() {
           </div>
 
           <div className="mt-6">
-            <h1 className="text-2xl font-bold">Alex Johnson</h1>
-            <p className="text-gray-500">@alexjohnson</p>
+            <h1 className="text-2xl font-bold">FeedMe User</h1>
+            <p className="text-gray-500">{walletAddress ? shortenAddress(walletAddress) : "Not connected"}</p>
 
             <p className="mt-4 text-gray-800">
               Frontend developer & UI/UX enthusiast. Building beautiful web
@@ -136,12 +103,12 @@ export default function OwnFeedPage() {
               <div className="flex items-center mr-4">
                 <LinkIcon className="h-4 w-4 mr-1" />
                 <a href="#" className="text-orange-500 hover:underline">
-                  alexjohnson.dev
+                  feedme.xyz
                 </a>
               </div>
               <div className="flex items-center mr-4">
                 <Calendar className="h-4 w-4 mr-1" />
-                <span>Joined March 2020</span>
+                <span>Joined 2024</span>
               </div>
             </div>
 
@@ -162,7 +129,7 @@ export default function OwnFeedPage() {
       {/* Tabs */}
       <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
         <div className="flex border-b border-gray-100">
-          {["posts"].map((tab) => (
+          {["posts", "replies", "media", "likes"].map((tab) => (
             <button
               key={tab}
               className={`flex-1 py-4 text-center font-medium ${
@@ -177,25 +144,30 @@ export default function OwnFeedPage() {
           ))}
         </div>
 
-        {/* Posts */}
+        {/* Feed */}
         <div className="divide-y divide-gray-100">
-          {posts.map((event, idx) => (
-            <div key={idx} className="p-4 border-b border-gray-100">
-              <div className="text-gray-800">
-                {formatEvent(event, walletAddress!)}
+          {posts.length === 0 ? (
+            <div className="p-6 text-center text-gray-500">No activity found.</div>
+          ) : (
+            posts.map((event, idx) => (
+              <div key={idx} className="p-4 border-b border-gray-100">
+                <div className="text-gray-800">
+                  {formatEvent(event, walletAddress!)}
+                </div>
+                <div className="text-sm text-gray-500 mt-1">
+                  Tx:{" "}
+                  <a
+                    href={`https://basescan.org/tx/${event.transactionHash}`}
+                    className="text-orange-500 underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {shortenAddress(event.transactionHash)}
+                  </a>
+                </div>
               </div>
-              <div className="text-sm text-gray-500 mt-1">
-                Tx:{" "}
-                <a
-                  href={`https://basescan.org/tx/${event.transactionHash}`}
-                  className="text-orange-500 underline"
-                  target="_blank"
-                >
-                  {shortenAddress(event.transactionHash)}
-                </a>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
