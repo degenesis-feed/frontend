@@ -8,9 +8,11 @@ import LeaderboardPage from "./components/LeaderboardPage";
 import CommunitiesPage from "./components/CommunitiesPage";
 import FollowingPage from "./components/FollowingPage";
 import OwnFeedPage from "./components/OwnFeedPage";
+import SearchOverlay from "./components/SearchOverlay";
 import { createAppKit } from "@reown/appkit/react";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { base, baseSepolia } from "@reown/appkit/networks";
+import { Search } from "lucide-react"
 
 // 1. Get projectId at https://cloud.reown.com
 const projectId = "d679b0acafc801412fd613c2ebe6a961";
@@ -37,6 +39,9 @@ createAppKit({
 export default function TwitterFrontend() {
   const [activeTab, setActiveTab] = useState("following");
   const [tweetText, setTweetText] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResults, setSearchResults] = useState<any[]>([])
   const [tweets, setTweets] = useState([
     {
       id: 1,
@@ -107,8 +112,28 @@ export default function TwitterFrontend() {
     setTweetText("");
   };
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    // In a real app, you would fetch search results from an API
+    console.log(`Searching for: ${query}`)
+
+    // For demo purposes, we'll filter tweets that contain the query
+    if (query.trim()) {
+      const filteredTweets = tweets.filter(
+        (tweet) =>
+          tweet.content.toLowerCase().includes(query.toLowerCase()) ||
+          tweet.name.toLowerCase().includes(query.toLowerCase()) ||
+          tweet.handle.toLowerCase().includes(query.toLowerCase()),
+      )
+      setSearchResults(filteredTweets)
+    } else {
+      setSearchResults([])
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col">
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onSearch={handleSearch} />
       {/* Navbar */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-4 w-full">
@@ -168,6 +193,16 @@ export default function TwitterFrontend() {
                 My Profile
               </button>
             </nav>
+            <div className="flex items-center">
+              <button
+                className="p-2 rounded-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-colors relative"
+                onClick={() => setIsSearchOpen(true)}
+                aria-label="Search"
+              >
+                <Search className="h-5 w-5" />
+                {searchQuery && <span className="absolute top-0 right-0 h-2 w-2 bg-orange-500 rounded-full"></span>}
+              </button>
+            </div>
             <div className="flex items-center">
               <button className="ml-4 flex items-center">
                 <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
